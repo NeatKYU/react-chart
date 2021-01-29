@@ -26,12 +26,12 @@ export default function SideBar() {
           <i className="block layout icon"></i>
           Chart
         </Link>
-        <Link className="item">
+        <Link className="item" to="/tchart">
           <i className="smile icon"></i>
-          Fuck
+          Tchart
         </Link>
       </div>
-      <div className="pusher">
+      <div className="pusher" style={{ marginLeft: "2rem" }}>
         <i
           className="align justify icon big"
           style={{ width: "20px", height: "30px" }}

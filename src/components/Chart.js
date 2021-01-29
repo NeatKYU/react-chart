@@ -6,6 +6,7 @@ import {
   VerticalBarSeries,
   VerticalGridLines,
   HorizontalGridLines,
+  AreaSeries,
   XAxis,
   YAxis,
 } from "react-vis";
@@ -30,6 +31,8 @@ export default function Chart({ chartKind }) {
       return <LineSeries data={data} />;
     } else if (chartKind === "VerticalBarSeries") {
       return <VerticalBarSeries data={data} />;
+    } else if (chartKind === "AreaSeries") {
+      return <AreaSeries data={data} />;
     } else {
       <div>
         <h1>not exist chartKind</h1>
@@ -44,7 +47,7 @@ export default function Chart({ chartKind }) {
         justifyContent: "center",
       }}
     >
-      <XYPlot height={300} width={(document.body.offsetWidth * 80) / 100}>
+      <XYPlot height={300} width={(window.innerWidth * 80) / 100}>
         {ChartValue(chartKind)}
         {/* <VerticalGridLines /> */}
         <HorizontalGridLines />
