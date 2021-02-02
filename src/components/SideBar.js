@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function SideBar() {
   const [view, setView] = useState("");
@@ -15,21 +15,27 @@ export default function SideBar() {
           view === true ? "visible" : ""
         }`}
       >
-        <Link className="item" onClick={() => viewChange()}>
+        <div className="item" onClick={() => viewChange()}>
           <i className="x icon"></i>
-        </Link>
-        <Link className="item" to="/">
-          <i className="home icon"></i>
-          Home
-        </Link>
-        <Link className="item" to="/chart">
-          <i className="block layout icon"></i>
-          Chart
-        </Link>
-        <Link className="item" to="/tchart">
-          <i className="smile icon"></i>
-          Tchart
-        </Link>
+        </div>
+        <NavLink to="/">
+          <div className="item">
+            <i className="home icon"></i>
+            Home
+          </div>
+        </NavLink>
+        <NavLink to="/chart">
+          <div className="item">
+            <i className="block layout icon"></i>
+            Chart
+          </div>
+        </NavLink>
+        <NavLink to="/toast">
+          <div className="item">
+            <i className="smile icon"></i>
+            Tchart
+          </div>
+        </NavLink>
       </div>
       <div className="pusher" style={{ marginLeft: "2rem" }}>
         <i

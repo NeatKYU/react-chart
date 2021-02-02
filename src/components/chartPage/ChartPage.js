@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Chart from "../Chart";
 import Header from "../Header";
-import DatePicker, { registerLocale } from "react-datepicker";
+import DatePicker from "react-datepicker";
 
 export default function ChartPage() {
   const [chartValue, setChartValue] = useState("LineSeries");
