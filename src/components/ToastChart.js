@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 /* import "@toast-ui/chart/dist/toastui-chart.min.css"; */
 import "@toast-ui/chart/dist/toastui-chart.css";
 import { ColumnChart } from "@toast-ui/react-chart";
+import DatePicker from "react-datepicker";
+import "../datepicker.css";
 
 // context API
 import {
   useDispatchChart,
   useStateChart,
-  getWeekChart,
+  getBarChart,
+  getProductChart,
+  setxAxis,
+  getSelectDateChart,
 } from "../contextAPI/ChartContext";
 import {
   useDispatchCompany,
@@ -22,8 +27,11 @@ function ToastChart() {
   const company_dispatch = useDispatchCompany();
 
   const [show, setShow] = useState(false);
-  const [csid, setCsid] = useState("1001");
+  const [chartVersion, setChartVersion] = useState("Amount");
+  const [csid, setCsid] = useState("1002");
   const [term, setTerm] = useState("WEEK");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const chartLoading = state.loading;
   const companyLoading = company_state.loading;
@@ -32,8 +40,25 @@ function ToastChart() {
   useEffect(() => {
     getCompanyInfo(company_dispatch);
     console.log("company state", company_state);
-    getWeekChart(dispatch, csid, term);
-  }, [dispatch, company_dispatch, csid, term]);
+    //setxAxis(dispatch, term);
+    if (chartVersion === "Amount") {
+      getBarChart(dispatch, csid, term);
+    } else if (chartVersion === "Product") {
+      getProductChart(dispatch, csid, term);
+    } else if (chartVersion === "StartEnd") {
+      getSelectDateChart(dispatch, csid, startDate, endDate);
+    } else {
+      return <div>do not setting chartVersion</div>;
+    }
+  }, [
+    dispatch,
+    company_dispatch,
+    csid,
+    term,
+    chartVersion,
+    startDate,
+    endDate,
+  ]);
 
   const ChartShow = () => {
     if (chartLoading) {
@@ -92,7 +117,7 @@ function ToastChart() {
       >
         {CompanyList()}
         <button className="ui button" onClick={() => setTerm("WEEK")}>
-          1주일
+          7일
         </button>
         <button className="ui button" onClick={() => setTerm("MONTH")}>
           30일
@@ -100,7 +125,32 @@ function ToastChart() {
         <button className="ui button" onClick={() => setTerm("YEAR")}>
           1년
         </button>
+        <button className="ui button" onClick={() => setChartVersion("Amount")}>
+          총량 차트
+        </button>
+        <button
+          className="ui button"
+          onClick={() => setChartVersion("Product")}
+        >
+          제품별 차트
+        </button>
       </div>
+      <br />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
+        ~
+        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
+        <button
+          className="ui button"
+          onClick={() => setChartVersion("StartEnd")}
+        >
+          검색
+        </button>
+      </div>
+      <br />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {ChartShow()}
       </div>
