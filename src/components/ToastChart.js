@@ -33,6 +33,11 @@ function ToastChart() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  const containerStyle = {
+    width: "80vw",
+    height: "60vh",
+  };
+
   const chartLoading = state.loading;
   const companyLoading = company_state.loading;
 
@@ -64,7 +69,13 @@ function ToastChart() {
     if (chartLoading) {
       return <div>로딩중...</div>;
     } else {
-      return <ColumnChart data={state.data} options={state.options} />;
+      return (
+        <ColumnChart
+          style={containerStyle}
+          data={state.data}
+          options={state.options}
+        />
+      );
     }
   };
 
@@ -151,9 +162,7 @@ function ToastChart() {
         </button>
       </div>
       <br />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {ChartShow()}
-      </div>
+      <div style={{ margin: "auto" }}>{ChartShow()}</div>
     </div>
   );
 }

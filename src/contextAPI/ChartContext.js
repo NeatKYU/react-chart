@@ -41,20 +41,71 @@ const initialData = {
   },
   options: {
     chart: {
-      width: MyWidth,
+      width: "auto",
       height: 450,
-      title: "? Revenue",
+      title: "Fist title",
     },
     yAxis: {
-      title: "Amount",
+      title: "amount",
     },
     xAxis: {
       title: "?",
+      pointOnColumn: true,
+      scale: 10,
     },
     series: {
       dataLabels: {
         visible: true,
       },
+    },
+    responsive: {
+      rules: [
+        {
+          condition: ({ width }) => {
+            console.log("responsive execute change size");
+            return width <= 800;
+          },
+          options: {
+            chart: {
+              title: "change",
+              /* width: MyWidth - 100, */
+            },
+          },
+        },
+        {
+          condition: ({ width }) => {
+            console.log("responsive execute change size");
+            return width <= 700;
+          },
+          options: {
+            /* chart: {
+              width: MyWidth - 100,
+            }, */
+          },
+        },
+        {
+          condition: ({ width }) => {
+            console.log("responsive execute change size");
+            return width <= 600;
+          },
+          options: {
+            /* chart: {
+              width: MyWidth - 100,
+            }, */
+          },
+        },
+        {
+          condition: ({ width }) => {
+            console.log("responsive execute change size");
+            return width <= 500;
+          },
+          options: {
+            chart: {
+              /* width: MyWidth - 100, */
+            },
+          },
+        },
+      ],
     },
   },
 };
@@ -79,6 +130,18 @@ function reducer(state, action) {
           },
           xAxis: {
             title: action.title,
+          },
+        },
+      };
+    case "SET_WIDTH":
+      return {
+        ...state,
+        loading: true,
+        options: {
+          ...state.options,
+          chart: {
+            ...state.options.chart,
+            width: action.width,
           },
         },
       };
